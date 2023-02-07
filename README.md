@@ -6,4 +6,5 @@ Este repositório conterá uma variedade de exemplos e aplicações da tecnologi
 
 ## Referências e material de leitura
 
-* [https://webglfundamentals.org/](https://webglfundamentals.org/)
+* Material principal lido: [https://webglfundamentals.org/](https://webglfundamentals.org/)
+* Testando suporte do navegador: [https://get.webgl.org/](https://get.webgl.org/)
