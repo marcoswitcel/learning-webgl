@@ -25,7 +25,38 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
     0.7, 0,
   ];
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+  // Faze de renderização
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+  // Limpa o canvas
+  gl.clearColor(0, 0, 0, 0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
   
+
+  // Seta o nosso programa para execução
+  gl.useProgram(program);
+
+  gl.enableVertexAttribArray(positionAttributeLocation);
+
+  // Bind the position buffer.
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+ 
+  // Configura o atributo para saber como extrair dados do buffer array
+  const size = 2;          // 2 components per iteration
+  const type = gl.FLOAT;   // the data is 32bit floats
+  const normalize = false; // don't normalize the data
+  const stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
+  const offset = 0;        // start at the beginning of the buffer
+  gl.vertexAttribPointer(
+    positionAttributeLocation, size, type, normalize, stride, offset);
+
+  {
+    const primitiveType = gl.TRIANGLES;
+    const offset = 0;
+    const count = 3;
+    gl.drawArrays(primitiveType, offset, count);
+  }
 };
 
 Promise.all([
