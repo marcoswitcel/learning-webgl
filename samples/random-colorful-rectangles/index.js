@@ -18,6 +18,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
+  const colorUniformLocation = gl.getUniformLocation(program, 'u_color');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   const positions = [
@@ -58,13 +59,46 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   gl.vertexAttribPointer(
     positionAttributeLocation, size, type, normalize, stride, offset);
 
-  {
+  // draw 50 random rectangles in random colors
+  for (let ii = 0; ii < 50; ++ii) {
+    // Setup a random rectangle
+    // This will write to positionBuffer because
+    // its the last thing we bound on the ARRAY_BUFFER
+    // bind point
+    setRectangle(
+        gl, randomInt(300), randomInt(300), randomInt(300), randomInt(300));
+
+    // Set a random color.
+    gl.uniform4f(colorUniformLocation, Math.random(), Math.random(), Math.random(), 1);
+
+    // Draw the rectangle.
     const primitiveType = gl.TRIANGLES;
     const offset = 0;
     const count = 6;
     gl.drawArrays(primitiveType, offset, count);
   }
 };
+
+// Returns a random integer from 0 to range - 1.
+function randomInt(range) {
+  return Math.floor(Math.random() * range);
+}
+
+// Fill the buffer with the values that define a rectangle.
+function setRectangle(gl, x, y, width, height) {
+  const x1 = x;
+  const x2 = x + width;
+  const y1 = y;
+  const y2 = y + height;
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    x1, y1,
+    x2, y1,
+    x1, y2,
+    x1, y2,
+    x2, y1,
+    x2, y2,
+  ]), gl.STATIC_DRAW);
+}
 
 Promise.all([
   fetchTex('./vertex-shader.glsl'),
