@@ -4,6 +4,8 @@ attribute vec2 a_position;
 
 uniform vec2 u_resolution;
 
+varying vec4 v_color;
+
 // todos os shaders tem um função 'main'
 void main() {
   // gl_Position e a variável especial que o vertex shader deve definir
@@ -20,4 +22,6 @@ void main() {
 
   // no final ainda multiplica o clipspace por vec2(1, -1) para inverter o eixo Y
   gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+
+  v_color = gl_Position * 0.5 + 0.5;
 }
