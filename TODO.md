@@ -1,5 +1,6 @@
 # Onde parei
 
+Não consegui fazer o exemplo com a textura e o quad rodar ainda
 https://webglfundamentals.org/webgl/lessons/webgl-image-processing.html
 
 Ler também
