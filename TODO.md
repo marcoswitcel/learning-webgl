@@ -1,11 +1,15 @@
 # Onde parei
 
-Não consegui fazer o exemplo com a textura e o quad rodar ainda
+Continuar aqui "And voila... Use the drop down list to select different kernels."
 https://webglfundamentals.org/webgl/lessons/webgl-image-processing.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
 https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
+Convolution Matrix
+https://docs.gimp.org/2.10/en/gimp-filter-convolution-matrix.html
+https://www.codeproject.com/Articles/6534/Convolution-of-Bitmaps
+
 
 Útil
 https://www.khronos.org/files/webgl/webgl-reference-card-1_0.pdf
@@ -14,7 +18,3 @@ https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html
 https://webglfundamentals.org/webgl/lessons/webgl-boilerplate.html
 https://webglfundamentals.org/webgl/lessons/webgl-setup-and-installation.html
 https://greggman.github.io/webgl-lint/
-
-Convolution Matrix
-https://docs.gimp.org/2.10/en/gimp-filter-convolution-matrix.html
-https://www.codeproject.com/Articles/6534/Convolution-of-Bitmaps
