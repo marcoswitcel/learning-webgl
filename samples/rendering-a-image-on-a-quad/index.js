@@ -18,15 +18,16 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
+  const texcoordLocation = gl.getAttribLocation(program, 'a_texCoord');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   const positions = [
-    10, 20,
-    80, 20,
-    10, 30,
-    10, 30,
-    80, 20,
-    80, 30,
+    0, 0,
+    gl.canvas.width, 0,
+    0, gl.canvas.height,
+    0, gl.canvas.height,
+    gl.canvas.width, 0,
+    gl.canvas.width, gl.canvas.height,
   ];
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
