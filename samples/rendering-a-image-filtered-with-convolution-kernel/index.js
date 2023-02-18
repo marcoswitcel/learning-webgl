@@ -20,6 +20,8 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
   const texcoordLocation = gl.getAttribLocation(program, 'a_texCoord');
   const textureSizeUniformLocation = gl.getUniformLocation(program, 'u_textureSize');
+  const kernelUniformLocation = gl.getUniformLocation(program, 'u_kernel[0]');
+  const kernelWeightUniformLocation = gl.getUniformLocation(program, 'u_kernelWeight');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   const positions = [
@@ -46,6 +48,15 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
   // Passa a resolução para o shader
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
   gl.uniform2f(textureSizeUniformLocation, image.width, image.height);
+
+  //kernel
+  const edgeDetectKernel = [
+    -1, -1, -1,
+    -1,  8, -1,
+    -1, -1, -1
+  ];
+  gl.uniform1fv(kernelUniformLocation, edgeDetectKernel);
+  gl.uniform1f(kernelWeightUniformLocation, computeKernelWeight(edgeDetectKernel));
 
   gl.enableVertexAttribArray(positionAttributeLocation);
 
@@ -110,6 +121,12 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
   }
 };
 
+function computeKernelWeight(kernel) {
+  const weight = kernel.reduce(function(prev, curr) {
+    return prev + curr;
+  });
+  return weight <= 0 ? 1 : weight;
+}
 
 const image = new Image();
 image.src = "./leaves.jpg";  // MUST BE SAME DOMAIN!!!
