@@ -19,6 +19,7 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
   const texcoordLocation = gl.getAttribLocation(program, 'a_texCoord');
+  const textureSizeUniformLocation = gl.getUniformLocation(program, 'u_textureSize');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   const positions = [
@@ -44,6 +45,7 @@ const main = (vertexShaderSource, fragmentShaderSource, image) => {
 
   // Passa a resolução para o shader
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+  gl.uniform2f(textureSizeUniformLocation, image.width, image.height);
 
   gl.enableVertexAttribArray(positionAttributeLocation);
 
