@@ -1,5 +1,6 @@
 # Onde parei
 
+"And here's the result if we multiply them together using WebGL."
 https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
 
 Ler também
@@ -8,6 +9,7 @@ https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 Convolution Matrix
 https://docs.gimp.org/2.10/en/gimp-filter-convolution-matrix.html
 https://www.codeproject.com/Articles/6534/Convolution-of-Bitmaps
+https://webglfundamentals.org/webgl/lessons/webgl-2d-translation.html
 
 
 Útil
@@ -17,3 +19,4 @@ https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html
 https://webglfundamentals.org/webgl/lessons/webgl-boilerplate.html
 https://webglfundamentals.org/webgl/lessons/webgl-setup-and-installation.html
 https://greggman.github.io/webgl-lint/
+https://www.youtube.com/watch?v=cQUn0Zeh-0Q
