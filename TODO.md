@@ -1,7 +1,7 @@
 # Onde parei
 
-"And here's the result if we multiply them together using WebGL."
-https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
+Fazer a implementação no exemplo "geometry-and-translation"
+https://webglfundamentals.org/webgl/lessons/webgl-2d-translation.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
@@ -20,3 +20,4 @@ https://webglfundamentals.org/webgl/lessons/webgl-boilerplate.html
 https://webglfundamentals.org/webgl/lessons/webgl-setup-and-installation.html
 https://greggman.github.io/webgl-lint/
 https://www.youtube.com/watch?v=cQUn0Zeh-0Q
+https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
