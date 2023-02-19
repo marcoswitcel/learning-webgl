@@ -1,7 +1,6 @@
 # Onde parei
 
-Continuar aqui "And voila... Use the drop down list to select different kernels."
-https://webglfundamentals.org/webgl/lessons/webgl-image-processing.html
+https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
