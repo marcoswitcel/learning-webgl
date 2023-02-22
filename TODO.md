@@ -1,7 +1,6 @@
 # Onde parei
 
-Fazer a implementação no exemplo "geometry-and-translation"
-https://webglfundamentals.org/webgl/lessons/webgl-2d-translation.html
+https://webglfundamentals.org/webgl/lessons/webgl-2d-rotation.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
