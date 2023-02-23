@@ -17,6 +17,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const program = createProgram(gl, vertexShader, fragmentShader);
 
   const translation = [0, 0];
+  const rotation = [0, 1];
   const width = 100;
   const height = 30;
   const color = [Math.random(), Math.random(), Math.random(), 1];
@@ -24,6 +25,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
   const translationLocation = gl.getUniformLocation(program, 'u_translation');
+  const rotationLocation = gl.getUniformLocation(program, 'u_rotation');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   
@@ -46,6 +48,8 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   // Set the translation.
   gl.uniform2fv(translationLocation, translation);
+
+  gl.uniform2fv(rotationLocation, rotation);
 
   gl.enableVertexAttribArray(positionAttributeLocation);
 
