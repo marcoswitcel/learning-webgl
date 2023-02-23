@@ -1,6 +1,6 @@
 # Onde parei
 
-https://webglfundamentals.org/webgl/lessons/webgl-2d-scale.html
+https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
