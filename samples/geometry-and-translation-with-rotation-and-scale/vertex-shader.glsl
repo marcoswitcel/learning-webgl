@@ -5,16 +5,20 @@ attribute vec2 a_position;
 uniform vec2 u_resolution;
 uniform vec2 u_translation;
 uniform vec2 u_rotation;
+uniform vec2 u_scale;
 
 // todos os shaders tem um função 'main'
 void main() {
   // gl_Position e a variável especial que o vertex shader deve definir
   // a expressão abaixo traduz a posição absoluta em pixels para o espaço de -1 e 1. 
 
+  // Scale the position
+  vec2 scaledPosition = a_position * u_scale;
+
   // Rotate the position
   vec2 rotatedPosition = vec2(
-    a_position.x * u_rotation.y + a_position.y * u_rotation.x,
-    a_position.y * u_rotation.y - a_position.x * u_rotation.x);
+    scaledPosition.x * u_rotation.y + scaledPosition.y * u_rotation.x,
+    scaledPosition.y * u_rotation.y - scaledPosition.x * u_rotation.x);
 
   // Add in the translation.
   vec2 position = rotatedPosition + u_translation;
