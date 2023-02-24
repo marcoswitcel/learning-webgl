@@ -1,5 +1,6 @@
 # Onde parei
 
+Ler de novo essa parte e implementar: "Let's go even more crazy."
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
 
 Ler também
