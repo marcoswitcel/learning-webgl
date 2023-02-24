@@ -1,5 +1,5 @@
 import { createProgram, createShader } from './gl-utils.js';
-import { createCanvas, fetchTex } from './utils.js';
+import { createCanvas, fetchTex, Mat3 } from './utils.js';
 
 const canvas = createCanvas(600, 500, document.body);
 
@@ -18,16 +18,23 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   const translation = [0, 0];
   const rotation = [0, 1];
+  const angleInRadians = (360 - 1) * Math.PI / 180;
   const scale = [1, 1];
   const width = 100;
   const height = 30;
   const color = [Math.random(), Math.random(), Math.random(), 1];
+  // Compute the matrices
+  const translationMatrix = Mat3.translation(translation[0], translation[1]);
+  const rotationMatrix = Mat3.rotation(angleInRadians);
+  const scaleMatrix = Mat3.scaling(scale[0], scale[1]);
+
+  // Multiply the matrices.
+  let matrix = Mat3.multiply(translationMatrix, rotationMatrix);
+  matrix = Mat3.multiply(matrix, scaleMatrix);
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
-  const translationLocation = gl.getUniformLocation(program, 'u_translation');
-  const rotationLocation = gl.getUniformLocation(program, 'u_rotation');
-  const scaleLocation = gl.getUniformLocation(program, 'u_scale');
+  const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   
@@ -48,11 +55,8 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   // Passa a resolução para o shader
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
 
-  // Set the translation.
-  gl.uniform2fv(translationLocation, translation);
-
-  gl.uniform2fv(rotationLocation, rotation);
-  gl.uniform2fv(scaleLocation, scale);
+  // Set the matrix.
+  gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
   gl.enableVertexAttribArray(positionAttributeLocation);
 
