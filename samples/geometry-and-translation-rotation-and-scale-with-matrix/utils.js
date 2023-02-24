@@ -83,4 +83,12 @@ export class Mat3 {
         0, 0, 1,
       ];
     }
+
+    static identity() {
+        return [
+          1, 0, 0,
+          0, 1, 0,
+          0, 0, 1,
+        ];
+    }
 };
