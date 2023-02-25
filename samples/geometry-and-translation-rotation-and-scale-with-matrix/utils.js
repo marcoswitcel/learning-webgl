@@ -100,4 +100,16 @@ export class Mat3 {
           -1, 1, 1
         ];
     }
+
+    static translate(m, tx, ty) {
+        return this.multiply(m, this.translation(tx, ty));
+    }
+     
+    static rotate(m, angleInRadians) {
+        return this.multiply(m, this.rotation(angleInRadians));
+    }
+    
+    static scale(m, sx, sy) {
+        return this.multiply(m, this.scaling(sx, sy));
+    }
 };

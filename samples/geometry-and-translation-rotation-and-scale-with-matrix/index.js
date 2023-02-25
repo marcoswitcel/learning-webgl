@@ -23,17 +23,12 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const width = 100;
   const height = 30;
   const color = [Math.random(), Math.random(), Math.random(), 1];
-  // Compute the matrices
-  const projectionMatrix = Mat3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
-  // Compute the matrices
-  const translationMatrix = Mat3.translation(translation[0], translation[1]);
-  const rotationMatrix = Mat3.rotation(angleInRadians);
-  const scaleMatrix = Mat3.scaling(scale[0], scale[1]);
-
-  // Multiply the matrices.
-  let matrix = Mat3.multiply(projectionMatrix, translationMatrix);
-  matrix = Mat3.multiply(matrix, rotationMatrix);
-  matrix = Mat3.multiply(matrix, scaleMatrix);
+  
+  // Compute the matrix
+  let matrix = Mat3.projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
+  matrix = Mat3.translate(matrix, translation[0], translation[1]);
+  matrix = Mat3.rotate(matrix, angleInRadians);
+  matrix = Mat3.scale(matrix, scale[0], scale[1]);
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
