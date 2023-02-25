@@ -1,7 +1,6 @@
 # Onde parei
 
-Ler de novo essa parte e implementar: "Let's go even more crazy."
-https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
+https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
@@ -14,6 +13,8 @@ https://webglfundamentals.org/webgl/lessons/webgl-3d-camera.html
 https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html
 https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
 https://webglfundamentals.org/webgl/lessons/webgl-matrix-vs-math.html
+https://webglfundamentals.org/webgl/lessons/webgl-2d-matrix-stack.html
+https://webglfundamentals.org/webgl/lessons/webgl-2d-drawimage.html
 
 
 Útil
@@ -26,3 +27,4 @@ https://greggman.github.io/webgl-lint/
 https://www.youtube.com/watch?v=cQUn0Zeh-0Q
 https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
 https://webglfundamentals.org/webgl/lessons/webgl-matrix-vs-math.html
+https://www.youtube.com/watch?v=kjBOesZCoqc&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
