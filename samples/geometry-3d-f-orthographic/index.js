@@ -48,9 +48,12 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   // will be culled.
   gl.enable(gl.CULL_FACE);
 
+  gl.enable(gl.DEPTH_TEST);
+
   // Limpa o canvas
   gl.clearColor(0, 0, 0, 0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
+  // Clear the canvas AND the depth buffer.
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   
 
   // Seta o nosso programa para execução
