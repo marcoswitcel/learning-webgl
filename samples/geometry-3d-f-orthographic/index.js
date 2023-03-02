@@ -24,7 +24,13 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const color = [Math.random(), Math.random(), Math.random(), 1];
   
   // Compute the matrix
-  let matrix = Mat4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400);
+  const left = 0;
+  const right = gl.canvas.clientWidth;
+  const bottom = gl.canvas.clientHeight;
+  const top = 0;
+  const near = 800;
+  const far = -400;
+  let matrix = Mat4.orthographic(left, right, bottom, top, near, far);
   matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
   matrix = Mat4.xRotate(matrix, rotation[0]);
   matrix = Mat4.yRotate(matrix, rotation[1]);
