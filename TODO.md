@@ -1,7 +1,6 @@
 # Onde parei
 
-"Fazer a implementação passo a passo"
-https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
+https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
