@@ -1,5 +1,6 @@
 # Onde parei
 
+"Implementar e reler"
 https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html
 
 Ler também
