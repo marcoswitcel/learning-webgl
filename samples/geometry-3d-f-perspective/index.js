@@ -30,6 +30,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const top = 0;
   const near = 800;
   const far = -400;
+  const fudgeFactor = 1;
   let matrix = Mat4.orthographic(left, right, bottom, top, near, far);
   matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
   matrix = Mat4.xRotate(matrix, rotation[0]);
@@ -40,6 +41,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
   const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
+  const fudgeLocation = gl.getUniformLocation(program, 'u_fudgeFactor');
   const positionBuffer = gl.createBuffer();
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -64,6 +66,9 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   // Seta o nosso programa para execução
   gl.useProgram(program);
+
+  // Set the fudgeFactor
+  gl.uniform1f(fudgeLocation, fudgeFactor);
 
   // Set the matrix.
   gl.uniformMatrix4fv(matrixLocation, false, matrix);
