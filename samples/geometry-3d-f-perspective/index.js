@@ -16,14 +16,16 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   
   const program = createProgram(gl, vertexShader, fragmentShader);
 
-  const translation = [45, 150, 0];
-  const rotation = [degToRad(40), degToRad(25), degToRad(325)];
+  const translation = [-150, 0, -360];
+  const rotation = [degToRad(190), degToRad(40), degToRad(320)];
   const scale = [1, 1, 1];
+  const fieldOfViewRadians = degToRad(60);
   
   // Compute the matrix
-  const fudgeFactor = 1;
-  let matrix = makeZToWMatrix(fudgeFactor);
-  matrix = Mat4.multiply(matrix, Mat4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400));
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const zNear = 1;
+  const zFar = 2000;
+  let matrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
   matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
   matrix = Mat4.xRotate(matrix, rotation[0]);
   matrix = Mat4.yRotate(matrix, rotation[1]);
