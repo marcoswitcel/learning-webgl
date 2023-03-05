@@ -1,7 +1,7 @@
 # Onde parei
 
-"Implementar e reler"
-https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective.html
+Lido, falta só implementar
+https://webglfundamentals.org/webgl/lessons/webgl-3d-camera.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
