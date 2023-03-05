@@ -275,3 +275,12 @@ export function radToDeg(r) {
 export function degToRad(d) {
     return d * Math.PI / 180;
 }
+
+export function makeZToWMatrix(fudgeFactor) {
+    return [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, fudgeFactor,
+        0, 0, 0, 1,
+    ];
+}

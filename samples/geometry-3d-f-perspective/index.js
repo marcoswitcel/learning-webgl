@@ -1,5 +1,5 @@
 import { createProgram, createShader } from './gl-utils.js';
-import { createCanvas, degToRad, fetchTex, Mat4 } from './utils.js';
+import { createCanvas, degToRad, fetchTex, makeZToWMatrix, Mat4 } from './utils.js';
 
 const canvas = createCanvas(600, 500, document.body);
 
@@ -19,19 +19,11 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const translation = [45, 150, 0];
   const rotation = [degToRad(40), degToRad(25), degToRad(325)];
   const scale = [1, 1, 1];
-  const width = 100;
-  const height = 30;
-  const color = [Math.random(), Math.random(), Math.random(), 1];
   
   // Compute the matrix
-  const left = 0;
-  const right = gl.canvas.clientWidth;
-  const bottom = gl.canvas.clientHeight;
-  const top = 0;
-  const near = 800;
-  const far = -400;
   const fudgeFactor = 1;
-  let matrix = Mat4.orthographic(left, right, bottom, top, near, far);
+  let matrix = makeZToWMatrix(fudgeFactor);
+  matrix = Mat4.multiply(matrix, Mat4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400));
   matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
   matrix = Mat4.xRotate(matrix, rotation[0]);
   matrix = Mat4.yRotate(matrix, rotation[1]);
@@ -41,7 +33,6 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
   const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
-  const fudgeLocation = gl.getUniformLocation(program, 'u_fudgeFactor');
   const positionBuffer = gl.createBuffer();
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -66,9 +57,6 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   // Seta o nosso programa para execução
   gl.useProgram(program);
-
-  // Set the fudgeFactor
-  gl.uniform1f(fudgeLocation, fudgeFactor);
 
   // Set the matrix.
   gl.uniformMatrix4fv(matrixLocation, false, matrix);
@@ -119,23 +107,6 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 };
 
 // Fill the buffer with the values that define a rectangle.
-function setRectangle(gl, x, y, width, height) {
-  const x1 = x;
-  const x2 = x + width;
-  const y1 = y;
-  const y2 = y + height;
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([
-      x1, y1,
-      x2, y1,
-      x1, y2,
-      x1, y2,
-      x2, y1,
-      x2, y2,
-    ]),
-    gl.STATIC_DRAW);
-}
 
 // Fill the buffer with the values that define a letter 'F'.
 function setGeometry(gl) {
