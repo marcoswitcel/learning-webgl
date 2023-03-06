@@ -19,18 +19,33 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const translation = [-150, 0, -360];
   const rotation = [degToRad(190), degToRad(40), degToRad(320)];
   const scale = [1, 1, 1];
+  const cameraAngleRadians = degToRad(-2);
   const fieldOfViewRadians = degToRad(60);
   
   // Compute the matrix
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 1;
   const zFar = 2000;
+  const projectionMatrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
   let matrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
   matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
   matrix = Mat4.xRotate(matrix, rotation[0]);
   matrix = Mat4.yRotate(matrix, rotation[1]);
   matrix = Mat4.zRotate(matrix, rotation[2]);
   matrix = Mat4.scale(matrix, scale[0], scale[1], scale[2]);
+
+  const numFs = 5;
+  const radius = 200;
+
+  // Compute a matrix for the camera
+  let cameraMatrix = Mat4.yRotation(cameraAngleRadians);
+  cameraMatrix = Mat4.translate(cameraMatrix, 0, 0, radius * 1.5);
+
+  // Make a view matrix from the camera matrix.
+  const viewMatrix = Mat4.inverse(cameraMatrix);
+
+  // Compute a view projection matrix
+  const viewProjectionMatrix = Mat4.multiply(projectionMatrix, viewMatrix);
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
@@ -59,9 +74,6 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   // Seta o nosso programa para execução
   gl.useProgram(program);
-
-  // Set the matrix.
-  gl.uniformMatrix4fv(matrixLocation, false, matrix);
 
   gl.enableVertexAttribArray(positionAttributeLocation);
 
@@ -101,10 +113,24 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   }
 
   {
-    const primitiveType = gl.TRIANGLES;
-    const offset = 0;
-    const count = 16 * 6;
-    gl.drawArrays(primitiveType, offset, count);
+    for (let ii = 0; ii < numFs; ++ii) {
+      const angle = ii * Math.PI * 2 / numFs;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius
+     
+      // starting with the view projection matrix
+      // compute a matrix for the F
+      const matrix = Mat4.translate(viewProjectionMatrix, x, 0, y);
+     
+      // Set the matrix.
+      gl.uniformMatrix4fv(matrixLocation, false, matrix);
+     
+      // Draw the geometry.
+      const primitiveType = gl.TRIANGLES;
+      const offset = 0;
+      const count = 16 * 6;
+      gl.drawArrays(primitiveType, offset, count);
+    }
   }
 };
 
@@ -112,137 +138,153 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
 // Fill the buffer with the values that define a letter 'F'.
 function setGeometry(gl) {
-  gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([
-        // left column front
-        0,   0,  0,
-        0, 150,  0,
-        30,   0,  0,
-        0, 150,  0,
-        30, 150,  0,
-        30,   0,  0,
+  const positions = new Float32Array([
+    // left column front
+    0,   0,  0,
+    0, 150,  0,
+    30,   0,  0,
+    0, 150,  0,
+    30, 150,  0,
+    30,   0,  0,
 
-        // top rung front
-        30,   0,  0,
-        30,  30,  0,
-        100,   0,  0,
-        30,  30,  0,
-        100,  30,  0,
-        100,   0,  0,
+    // top rung front
+    30,   0,  0,
+    30,  30,  0,
+    100,   0,  0,
+    30,  30,  0,
+    100,  30,  0,
+    100,   0,  0,
 
-        // middle rung front
-        30,  60,  0,
-        30,  90,  0,
-        67,  60,  0,
-        30,  90,  0,
-        67,  90,  0,
-        67,  60,  0,
+    // middle rung front
+    30,  60,  0,
+    30,  90,  0,
+    67,  60,  0,
+    30,  90,  0,
+    67,  90,  0,
+    67,  60,  0,
 
-        // left column back
-        0,   0,  30,
-        30,   0,  30,
-        0, 150,  30,
-        0, 150,  30,
-        30,   0,  30,
-        30, 150,  30,
+    // left column back
+    0,   0,  30,
+    30,   0,  30,
+    0, 150,  30,
+    0, 150,  30,
+    30,   0,  30,
+    30, 150,  30,
 
-        // top rung back
-        30,   0,  30,
-        100,   0,  30,
-        30,  30,  30,
-        30,  30,  30,
-        100,   0,  30,
-        100,  30,  30,
+    // top rung back
+    30,   0,  30,
+    100,   0,  30,
+    30,  30,  30,
+    30,  30,  30,
+    100,   0,  30,
+    100,  30,  30,
 
-        // middle rung back
-        30,  60,  30,
-        67,  60,  30,
-        30,  90,  30,
-        30,  90,  30,
-        67,  60,  30,
-        67,  90,  30,
+    // middle rung back
+    30,  60,  30,
+    67,  60,  30,
+    30,  90,  30,
+    30,  90,  30,
+    67,  60,  30,
+    67,  90,  30,
 
-        // top
-        0,   0,   0,
-        100,   0,   0,
-        100,   0,  30,
-        0,   0,   0,
-        100,   0,  30,
-        0,   0,  30,
+    // top
+    0,   0,   0,
+    100,   0,   0,
+    100,   0,  30,
+    0,   0,   0,
+    100,   0,  30,
+    0,   0,  30,
 
-        // top rung right
-        100,   0,   0,
-        100,  30,   0,
-        100,  30,  30,
-        100,   0,   0,
-        100,  30,  30,
-        100,   0,  30,
+    // top rung right
+    100,   0,   0,
+    100,  30,   0,
+    100,  30,  30,
+    100,   0,   0,
+    100,  30,  30,
+    100,   0,  30,
 
-        // under top rung
-        30,   30,   0,
-        30,   30,  30,
-        100,  30,  30,
-        30,   30,   0,
-        100,  30,  30,
-        100,  30,   0,
+    // under top rung
+    30,   30,   0,
+    30,   30,  30,
+    100,  30,  30,
+    30,   30,   0,
+    100,  30,  30,
+    100,  30,   0,
 
-        // between top rung and middle
-        30,   30,   0,
-        30,   60,  30,
-        30,   30,  30,
-        30,   30,   0,
-        30,   60,   0,
-        30,   60,  30,
+    // between top rung and middle
+    30,   30,   0,
+    30,   60,  30,
+    30,   30,  30,
+    30,   30,   0,
+    30,   60,   0,
+    30,   60,  30,
 
-        // top of middle rung
-        30,   60,   0,
-        67,   60,  30,
-        30,   60,  30,
-        30,   60,   0,
-        67,   60,   0,
-        67,   60,  30,
+    // top of middle rung
+    30,   60,   0,
+    67,   60,  30,
+    30,   60,  30,
+    30,   60,   0,
+    67,   60,   0,
+    67,   60,  30,
 
-        // right of middle rung
-        67,   60,   0,
-        67,   90,  30,
-        67,   60,  30,
-        67,   60,   0,
-        67,   90,   0,
-        67,   90,  30,
+    // right of middle rung
+    67,   60,   0,
+    67,   90,  30,
+    67,   60,  30,
+    67,   60,   0,
+    67,   90,   0,
+    67,   90,  30,
 
-        // bottom of middle rung.
-        30,   90,   0,
-        30,   90,  30,
-        67,   90,  30,
-        30,   90,   0,
-        67,   90,  30,
-        67,   90,   0,
+    // bottom of middle rung.
+    30,   90,   0,
+    30,   90,  30,
+    67,   90,  30,
+    30,   90,   0,
+    67,   90,  30,
+    67,   90,   0,
 
-        // right of bottom
-        30,   90,   0,
-        30,  150,  30,
-        30,   90,  30,
-        30,   90,   0,
-        30,  150,   0,
-        30,  150,  30,
+    // right of bottom
+    30,   90,   0,
+    30,  150,  30,
+    30,   90,  30,
+    30,   90,   0,
+    30,  150,   0,
+    30,  150,  30,
 
-        // bottom
-        0,   150,   0,
-        0,   150,  30,
-        30,  150,  30,
-        0,   150,   0,
-        30,  150,  30,
-        30,  150,   0,
+    // bottom
+    0,   150,   0,
+    0,   150,  30,
+    30,  150,  30,
+    0,   150,   0,
+    30,  150,  30,
+    30,  150,   0,
 
-        // left side
-        0,   0,   0,
-        0,   0,  30,
-        0, 150,  30,
-        0,   0,   0,
-        0, 150,  30,
-        0, 150,   0]),
-      gl.STATIC_DRAW);
+    // left side
+    0,   0,   0,
+    0,   0,  30,
+    0, 150,  30,
+    0,   0,   0,
+    0, 150,  30,
+    0, 150,   0]);
+
+  // Center the F around the origin and Flip it around. We do this because
+  // we're in 3D now with and +Y is up where as before when we started with 2D
+  // we had +Y as down.
+
+  // We could do by changing all the values above but I'm lazy.
+  // We could also do it with a matrix at draw time but you should
+  // never do stuff at draw time if you can do it at init time.
+  let matrix = Mat4.xRotation(Math.PI);
+  matrix = Mat4.translate(matrix, -50, -75, -15);
+
+  for (let ii = 0; ii < positions.length; ii += 3) {
+    const vector = Mat4.vectorMultiply([positions[ii + 0], positions[ii + 1], positions[ii + 2], 1], matrix);
+    positions[ii + 0] = vector[0];
+    positions[ii + 1] = vector[1];
+    positions[ii + 2] = vector[2];
+  }
+
+  gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
 }
 
 // Fill the buffer with colors for the 'F'.
