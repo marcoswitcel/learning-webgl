@@ -1,6 +1,7 @@
 # Onde parei
 
-Lido, falta só implementar
+Lido, falta só implementar (parcialmente implementado, continuar lendo e implementado a partir da frase a seguir)
+"That's all fine but using rotate and translate to move a camera where you want it and point"
 https://webglfundamentals.org/webgl/lessons/webgl-3d-camera.html
 
 Ler também
