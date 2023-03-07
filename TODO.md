@@ -1,7 +1,7 @@
 # Onde parei
 
 Lido, falta só implementar (parcialmente implementado, continuar lendo e implementado a partir da frase a seguir)
-"That's all fine but using rotate and translate to move a camera where you want it and point"
+"And here is how we might use it to make the camera point at a specific 'F' as we move it."
 https://webglfundamentals.org/webgl/lessons/webgl-3d-camera.html
 
 Ler também
