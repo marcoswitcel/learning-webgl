@@ -1,8 +1,7 @@
 # Onde parei
 
-Lido, falta só implementar (parcialmente implementado, continuar lendo e implementado a partir da frase a seguir)
-"And here is how we might use it to make the camera point at a specific 'F' as we move it."
-https://webglfundamentals.org/webgl/lessons/webgl-3d-camera.html
+Ler
+https://webglfundamentals.org/webgl/lessons/webgl-animation.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html

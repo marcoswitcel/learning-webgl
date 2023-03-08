@@ -37,9 +37,24 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const numFs = 5;
   const radius = 200;
 
+  // Compute the position of the first F
+  const fPosition = [radius, 0, 0];
+
   // Compute a matrix for the camera
   let cameraMatrix = Mat4.yRotation(cameraAngleRadians);
   cameraMatrix = Mat4.translate(cameraMatrix, 0, 0, radius * 1.5);
+
+  // Get the camera's position from the matrix we computed
+  const cameraPosition = [
+    cameraMatrix[12],
+    cameraMatrix[13],
+    cameraMatrix[14],
+  ];
+
+  const up = [0, 1, 0];
+
+  // Compute the camera's matrix using look at.
+  cameraMatrix = Mat4.lookAt(cameraPosition, fPosition, up);
 
   // Make a view matrix from the camera matrix.
   const viewMatrix = Mat4.inverse(cameraMatrix);

@@ -116,7 +116,7 @@ export class Mat3 {
 
 export class Mat4 {
 
-    lookAt(cameraPosition, target, up) {
+    static lookAt(cameraPosition, target, up) {
         const zAxis = normalize(
             subtractVectors(cameraPosition, target));
         const xAxis = normalize(cross(up, zAxis));
