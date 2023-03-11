@@ -1,7 +1,7 @@
 # Onde parei
 
 Ler
-https://webglfundamentals.org/webgl/lessons/webgl-animation.html
+https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
