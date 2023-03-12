@@ -1,6 +1,6 @@
 # Onde parei
 
-Ler
+Ler (implementar)
 https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 
 Ler também
