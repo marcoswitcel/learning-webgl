@@ -2,12 +2,12 @@
 // to pick one. mediump is a good default
 precision mediump float;
 
+// The texture.
+uniform sampler2D u_texture;
+
 // Passed in from the vertex shader.
-varying vec4 v_color;
+varying vec2 v_texcoord;
 
 void main() {
-  // gl_FragColor is a special variable a fragment shader
-  // is responsible for setting
-  // gl_FragColor = vec4(1, 0, 0.5, 1); // return reddish-purple
-  gl_FragColor = v_color;
+  gl_FragColor = texture2D(u_texture, v_texcoord);
 }

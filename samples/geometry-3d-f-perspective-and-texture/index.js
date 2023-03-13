@@ -33,14 +33,32 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   matrix = Mat4.scale(matrix, scale[0], scale[1], scale[2]);
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
-  const colorAttributeLocation = gl.getAttribLocation(program, 'a_color');
+  const texcoordLocation = gl.getAttribLocation(program, 'a_texcoord');
   const matrixLocation = gl.getUniformLocation(program, 'u_matrix');
   const positionBuffer = gl.createBuffer();
-  const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   
   // Put geometry data into buffer
   setGeometry(gl);
+
+  // Create a texture.
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Fill the texture with a 1x1 blue pixel.
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+    new Uint8Array([0, 0, 255, 255]));
+  
+  // Create a buffer for texcoords.
+  const texcoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, texcoordBuffer);
+  gl.enableVertexAttribArray(texcoordLocation);
+
+  // We'll supply texcoords as floats.
+  gl.vertexAttribPointer(texcoordLocation, 2, gl.FLOAT, false, 0, 0);
+
+  // Set Texcoords.
+  setTexcoords(gl);
 
   // Faze de renderização
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -68,8 +86,7 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   // Bind the position buffer.
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  // Setup a rectangle
-  //setRectangle(gl, translation[0], translation[1], width, height);
+
  
   // Configura o atributo para saber como extrair dados do buffer array
   const size = 3;          // 3 components per iteration
@@ -79,26 +96,6 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
   const offset = 0;        // start at the beginning of the buffer
   gl.vertexAttribPointer(
     positionAttributeLocation, size, type, normalize, stride, offset);
-
-  // Turn on the color attribute
-  gl.enableVertexAttribArray(colorAttributeLocation);
-
-  // Bind the color buffer.
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-  
-  // Put the colors in the buffer.
-  setColors(gl);
-
-  {
-    // Tell the attribute how to get data out of colorBuffer (ARRAY_BUFFER)
-    const size = 3;                 // 3 components per iteration
-    const type = gl.UNSIGNED_BYTE;  // the data is 8bit unsigned values
-    const normalize = true;         // normalize the data (convert from 0-255 to 0-1)
-    const stride = 0;               // 0 = move forward size * sizeof(type) each iteration to get the next position
-    const offset = 0;               // start at the beginning of the buffer
-    gl.vertexAttribPointer(
-      colorAttributeLocation, size, type, normalize, stride, offset);
-  }
 
   {
     const primitiveType = gl.TRIANGLES;
@@ -245,139 +242,139 @@ function setGeometry(gl) {
       gl.STATIC_DRAW);
 }
 
-// Fill the buffer with colors for the 'F'.
-function setColors(gl) {
+// Fill the buffer with texture coordinates the F.
+function setTexcoords(gl) {
   gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Uint8Array([
-          // left column front
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
+    gl.ARRAY_BUFFER,
+    new Float32Array([
+      // left column front
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
 
-          // top rung front
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
+      // top rung front
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
 
-          // middle rung front
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
-        200,  70, 120,
+      // middle rung front
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
 
-          // left column back
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
+      // left column back
+      0, 0,
+      1, 0,
+      0, 1,
+      0, 1,
+      1, 0,
+      1, 1,
 
-          // top rung back
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
+      // top rung back
+      0, 0,
+      1, 0,
+      0, 1,
+      0, 1,
+      1, 0,
+      1, 1,
 
-          // middle rung back
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
-        80, 70, 200,
+      // middle rung back
+      0, 0,
+      1, 0,
+      0, 1,
+      0, 1,
+      1, 0,
+      1, 1,
 
-          // top
-        70, 200, 210,
-        70, 200, 210,
-        70, 200, 210,
-        70, 200, 210,
-        70, 200, 210,
-        70, 200, 210,
+      // top
+      0, 0,
+      1, 0,
+      1, 1,
+      0, 0,
+      1, 1,
+      0, 1,
 
-          // top rung right
-        200, 200, 70,
-        200, 200, 70,
-        200, 200, 70,
-        200, 200, 70,
-        200, 200, 70,
-        200, 200, 70,
+      // top rung right
+      0, 0,
+      1, 0,
+      1, 1,
+      0, 0,
+      1, 1,
+      0, 1,
 
-          // under top rung
-        210, 100, 70,
-        210, 100, 70,
-        210, 100, 70,
-        210, 100, 70,
-        210, 100, 70,
-        210, 100, 70,
+      // under top rung
+      0, 0,
+      0, 1,
+      1, 1,
+      0, 0,
+      1, 1,
+      1, 0,
 
-          // between top rung and middle
-        210, 160, 70,
-        210, 160, 70,
-        210, 160, 70,
-        210, 160, 70,
-        210, 160, 70,
-        210, 160, 70,
+      // between top rung and middle
+      0, 0,
+      1, 1,
+      0, 1,
+      0, 0,
+      1, 0,
+      1, 1,
 
-          // top of middle rung
-        70, 180, 210,
-        70, 180, 210,
-        70, 180, 210,
-        70, 180, 210,
-        70, 180, 210,
-        70, 180, 210,
+      // top of middle rung
+      0, 0,
+      1, 1,
+      0, 1,
+      0, 0,
+      1, 0,
+      1, 1,
 
-          // right of middle rung
-        100, 70, 210,
-        100, 70, 210,
-        100, 70, 210,
-        100, 70, 210,
-        100, 70, 210,
-        100, 70, 210,
+      // right of middle rung
+      0, 0,
+      1, 1,
+      0, 1,
+      0, 0,
+      1, 0,
+      1, 1,
 
-          // bottom of middle rung.
-        76, 210, 100,
-        76, 210, 100,
-        76, 210, 100,
-        76, 210, 100,
-        76, 210, 100,
-        76, 210, 100,
+      // bottom of middle rung.
+      0, 0,
+      0, 1,
+      1, 1,
+      0, 0,
+      1, 1,
+      1, 0,
 
-          // right of bottom
-        140, 210, 80,
-        140, 210, 80,
-        140, 210, 80,
-        140, 210, 80,
-        140, 210, 80,
-        140, 210, 80,
+      // right of bottom
+      0, 0,
+      1, 1,
+      0, 1,
+      0, 0,
+      1, 0,
+      1, 1,
 
-          // bottom
-        90, 130, 110,
-        90, 130, 110,
-        90, 130, 110,
-        90, 130, 110,
-        90, 130, 110,
-        90, 130, 110,
+      // bottom
+      0, 0,
+      0, 1,
+      1, 1,
+      0, 0,
+      1, 1,
+      1, 0,
 
-          // left side
-        160, 160, 220,
-        160, 160, 220,
-        160, 160, 220,
-        160, 160, 220,
-        160, 160, 220,
-        160, 160, 220]),
-      gl.STATIC_DRAW);
+      // left side
+      0, 0,
+      0, 1,
+      1, 1,
+      0, 0,
+      1, 1,
+      1, 0]),
+    gl.STATIC_DRAW);
 }
 
 Promise.all([
