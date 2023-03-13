@@ -1,6 +1,6 @@
 # Onde parei
 
-Ler (implementar)
+Ler (implementar a partir daqui "What if we wanted to just use a part of the texture across the front of the 'F'? Textures are")
 https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 
 Ler também
