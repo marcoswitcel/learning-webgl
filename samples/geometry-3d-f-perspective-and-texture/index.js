@@ -1,5 +1,5 @@
 import { createProgram, createShader } from './gl-utils.js';
-import { createCanvas, degToRad, fetchTex, makeZToWMatrix, Mat4 } from './utils.js';
+import { createCanvas, degToRad, fetchImage, fetchTex, makeZToWMatrix, Mat4 } from './utils.js';
 
 const canvas = createCanvas(600, 500, document.body);
 
@@ -10,7 +10,7 @@ if (!gl) {
   throw new Error('WebGL não suportado nesse navegador');
 }
 
-const main = (vertexShaderSource, fragmentShaderSource) => {
+const main = (vertexShaderSource, fragmentShaderSource, fTexture) => {
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
   
@@ -43,11 +43,15 @@ const main = (vertexShaderSource, fragmentShaderSource) => {
 
   // Create a texture.
   const texture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, texture);
+  // gl.bindTexture(gl.TEXTURE_2D, texture);
 
   // Fill the texture with a 1x1 blue pixel.
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-    new Uint8Array([0, 0, 255, 255]));
+  // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+  //  new Uint8Array([0, 0, 255, 255]));
+
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, fTexture);
+  gl.generateMipmap(gl.TEXTURE_2D);
   
   // Create a buffer for texcoords.
   const texcoordBuffer = gl.createBuffer();
@@ -379,8 +383,9 @@ function setTexcoords(gl) {
 
 Promise.all([
   fetchTex('./vertex-shader.glsl'),
-  fetchTex('./fragment-shader.glsl')
-]).then(([vertexShaderSource, fragmentShaderSource]) => {
-  main(vertexShaderSource, fragmentShaderSource);
+  fetchTex('./fragment-shader.glsl'),
+  fetchImage('./f-texture.png'),
+]).then(([vertexShaderSource, fragmentShaderSource, texture]) => {
+  main(vertexShaderSource, fragmentShaderSource, texture);
 })
 

@@ -23,6 +23,21 @@ export function fetchTex(...args) {
     return fetch(...args).then(resp => resp.text());
 }
 
+/**
+ * 
+ * @param {string} path Caminho da imagem
+ * @returns {Image}
+ */
+export function fetchImage(path) {
+    const image = new Image();
+    image.src = path;
+
+    return new Promise((resolve, reject) => {
+        image.onload = () => { resolve(image) };
+        image.onerror = () => { reject(image) };
+    });
+}
+
 export class Mat3 {
 
     static multiply(a, b) {
