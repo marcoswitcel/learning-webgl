@@ -1,6 +1,6 @@
 # Onde parei
 
-Ler (implementar a partir daqui "What if we wanted to just use a part of the texture across the front of the 'F'? Textures are")
+Ler (implementar a partir daqui "You can tell WebGL to not repeat the texture in a certain direction by using")
 https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 
 Ler também
