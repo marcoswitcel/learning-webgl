@@ -1,7 +1,7 @@
 # Onde parei
 
-Ler (implementar a partir daqui "You can tell WebGL to not repeat the texture in a certain direction by using")
-https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
+Ler
+https://webglfundamentals.org/webgl/lessons/webgl-data-textures.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
@@ -16,6 +16,10 @@ https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
 https://webglfundamentals.org/webgl/lessons/webgl-matrix-vs-math.html
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrix-stack.html
 https://webglfundamentals.org/webgl/lessons/webgl-2d-drawimage.html
+https://webglfundamentals.org/webgl/lessons/webgl-texture-units.html
+https://webglfundamentals.org/webgl/lessons/webgl-cors-permission.html
+https://webglfundamentals.org/webgl/lessons/webgl-3d-perspective-correct-texturemapping.html
+https://webglfundamentals.org/webgl/lessons/webgl-less-code-more-fun.html
 
 
 Útil
