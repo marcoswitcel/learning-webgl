@@ -1,6 +1,6 @@
 # Onde parei
 
-Ler
+Ler (implementar o exemplo de cubo com imagens e cubo com a textura de luminance)
 https://webglfundamentals.org/webgl/lessons/webgl-data-textures.html
 
 Ler também
