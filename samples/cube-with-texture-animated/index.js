@@ -25,12 +25,7 @@ const main = (vertexShaderSource, fragmentShaderSource, fTexture) => {
   const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
   const zNear = 1;
   const zFar = 2000;
-  let matrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
-  matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
-  matrix = Mat4.xRotate(matrix, rotation[0]);
-  matrix = Mat4.yRotate(matrix, rotation[1]);
-  matrix = Mat4.zRotate(matrix, rotation[2]);
-  matrix = Mat4.scale(matrix, scale[0], scale[1], scale[2]);
+
 
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
   const texcoordLocation = gl.getAttribLocation(program, 'a_texcoord');
@@ -64,49 +59,76 @@ const main = (vertexShaderSource, fragmentShaderSource, fTexture) => {
   // Set Texcoords.
   setTexcoords(gl);
 
-  // Faze de renderização
-  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+  let previousTimestamp = 0;
 
-  // Turn on culling. By default backfacing triangles
-  // will be culled.
-  gl.enable(gl.CULL_FACE);
+  function render(timestamp) {
 
-  gl.enable(gl.DEPTH_TEST);
+    // convert to seconds
+    timestamp *= 0.001;
+    // Subtract the previous time from the current time
+    const deltaTime = timestamp - previousTimestamp;
+    // Remember the current time for the next frame.
+    previousTimestamp = timestamp;
 
-  // Limpa o canvas
-  gl.clearColor(0, 0, 0, 0);
-  // Clear the canvas AND the depth buffer.
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  
+    // Faze de renderização
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-  // Seta o nosso programa para execução
-  gl.useProgram(program);
+    // Turn on culling. By default backfacing triangles
+    // will be culled.
+    gl.enable(gl.CULL_FACE);
 
-  // Set the matrix.
-  gl.uniformMatrix4fv(matrixLocation, false, matrix);
+    gl.enable(gl.DEPTH_TEST);
 
-  gl.enableVertexAttribArray(positionAttributeLocation);
+    // Animate the rotation
+    rotation[0] += -0.7 * deltaTime;
+    rotation[1] += -0.4 * deltaTime;
 
-  // Bind the position buffer.
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    // Limpa o canvas
+    gl.clearColor(0, 0, 0, 0);
+    // Clear the canvas AND the depth buffer.
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 
- 
-  // Configura o atributo para saber como extrair dados do buffer array
-  const size = 3;          // 3 components per iteration
-  const type = gl.FLOAT;   // the data is 32bit floats
-  const normalize = false; // don't normalize the data
-  const stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
-  const offset = 0;        // start at the beginning of the buffer
-  gl.vertexAttribPointer(
-    positionAttributeLocation, size, type, normalize, stride, offset);
+    // Seta o nosso programa para execução
+    gl.useProgram(program);
 
-  {
-    const primitiveType = gl.TRIANGLES;
-    const offset = 0;
-    const count = 16 * 6;
-    gl.drawArrays(primitiveType, offset, count);
+    let matrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
+    matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
+    matrix = Mat4.xRotate(matrix, rotation[0]);
+    matrix = Mat4.yRotate(matrix, rotation[1]);
+    matrix = Mat4.zRotate(matrix, rotation[2]);
+    matrix = Mat4.scale(matrix, scale[0], scale[1], scale[2]);
+
+    // Set the matrix.
+    gl.uniformMatrix4fv(matrixLocation, false, matrix);
+
+    gl.enableVertexAttribArray(positionAttributeLocation);
+
+    // Bind the position buffer.
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+
+
+    // Configura o atributo para saber como extrair dados do buffer array
+    const size = 3;          // 3 components per iteration
+    const type = gl.FLOAT;   // the data is 32bit floats
+    const normalize = false; // don't normalize the data
+    const stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
+    const offset = 0;        // start at the beginning of the buffer
+    gl.vertexAttribPointer(
+      positionAttributeLocation, size, type, normalize, stride, offset);
+
+    {
+      const primitiveType = gl.TRIANGLES;
+      const offset = 0;
+      const count = 16 * 6;
+      gl.drawArrays(primitiveType, offset, count);
+    }
+
+    requestAnimationFrame(render);
   }
+
+  requestAnimationFrame(render);
 };
 
 // Fill the buffer with the values that define a letter 'F'.
