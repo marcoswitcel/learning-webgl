@@ -3,7 +3,7 @@
 Ler (implementar o exemplo de cubo com imagens e cubo com a textura de luminance)
 https://webglfundamentals.org/webgl/lessons/webgl-data-textures.html
 
-(Exemeplo do cubo: "This style of applying multiple images using 1 texture is often called a texture atlas. It's")
+(Referência até acabar o tutorial de cima)
 https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
 
 Ler também
