@@ -92,12 +92,25 @@ const main = (vertexShaderSource, fragmentShaderSource, fTexture) => {
     // Seta o nosso programa para execução
     gl.useProgram(program);
 
-    let matrix = Mat4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
-    matrix = Mat4.translate(matrix, translation[0], translation[1], translation[2]);
-    matrix = Mat4.xRotate(matrix, rotation[0]);
+    // Compute the projection matrix
+    const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    const projectionMatrix =
+        Mat4.perspective(fieldOfViewRadians, aspect, 1, 2000);
+
+    const cameraPosition = [0, 0, 2];
+    const up = [0, 1, 0];
+    const target = [0, 0, 0];
+
+    // Compute the camera's matrix using look at.
+    const cameraMatrix = Mat4.lookAt(cameraPosition, target, up);
+
+    // Make a view matrix from the camera matrix.
+    const viewMatrix = Mat4.inverse(cameraMatrix);
+
+    const viewProjectionMatrix = Mat4.multiply(projectionMatrix, viewMatrix);
+
+    let matrix = Mat4.xRotate(viewProjectionMatrix, rotation[0]);
     matrix = Mat4.yRotate(matrix, rotation[1]);
-    matrix = Mat4.zRotate(matrix, rotation[2]);
-    matrix = Mat4.scale(matrix, scale[0], scale[1], scale[2]);
 
     // Set the matrix.
     gl.uniformMatrix4fv(matrixLocation, false, matrix);
@@ -189,9 +202,9 @@ function setGeometry(gl) {
 
   for (let ii = 0; ii < positions.length; ii += 3) {
     const vector = [positions[ii + 0], positions[ii + 1], positions[ii + 2], 1]
-    positions[ii + 0] = vector[0] * 100;
-    positions[ii + 1] = vector[1] * 100;
-    positions[ii + 2] = vector[2] * 100;
+    positions[ii + 0] = vector[0] * 1;
+    positions[ii + 1] = vector[1] * 1;
+    positions[ii + 2] = vector[2] * 1;
   }
 
   gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
