@@ -1,10 +1,7 @@
 # Onde parei
 
-Ler (implementar o exemplo de cubo com imagens e cubo com a textura de luminance)
-https://webglfundamentals.org/webgl/lessons/webgl-data-textures.html
-
-(Referência até acabar o tutorial de cima)
-https://webglfundamentals.org/webgl/lessons/webgl-3d-textures.html
+Ler
+https://webglfundamentals.org/webgl/lessons/webgl-render-to-texture.html
 
 Ler também
 https://webglfundamentals.org/webgl/lessons/webgl-2d-matrices.html
