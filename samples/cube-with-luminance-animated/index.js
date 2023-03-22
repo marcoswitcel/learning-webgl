@@ -45,8 +45,31 @@ const main = (vertexShaderSource, fragmentShaderSource, fTexture) => {
   //  new Uint8Array([0, 0, 255, 255]));
 
   gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, fTexture);
-  gl.generateMipmap(gl.TEXTURE_2D);
+  {
+    // fill texture with 3x2 pixels
+    const level = 0;
+    const internalFormat = gl.LUMINANCE;
+    const width = 3;
+    const height = 2;
+    const border = 0;
+    const format = gl.LUMINANCE;
+    const type = gl.UNSIGNED_BYTE;
+    const data = new Uint8Array([
+      128,  64, 128,
+        0, 192,   0,
+    ]);
+    const alignment = 1;
+    gl.pixelStorei(gl.UNPACK_ALIGNMENT, alignment);
+    
+    gl.texImage2D(gl.TEXTURE_2D, level, internalFormat, width, height, border,
+                  format, type, data);
+    
+    // set the filtering so we don't need mips
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
   
   // Create a buffer for texcoords.
   const texcoordBuffer = gl.createBuffer();
@@ -216,48 +239,47 @@ function setTexcoords(gl) {
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array([
-      // select the top left image
-      0   , 0  ,
-      0   , 0.5,
-      0.25, 0  ,
-      0   , 0.5,
-      0.25, 0.5,
-      0.25, 0  ,
-      // select the top middle image
-      0.25, 0  ,
-      0.5 , 0  ,
-      0.25, 0.5,
-      0.25, 0.5,
-      0.5 , 0  ,
-      0.5 , 0.5,
-      // select to top right image
-      0.5 , 0  ,
-      0.5 , 0.5,
-      0.75, 0  ,
-      0.5 , 0.5,
-      0.75, 0.5,
-      0.75, 0  ,
-      // select the bottom left image
-      0   , 0.5,
-      0.25, 0.5,
-      0   , 1  ,
-      0   , 1  ,
-      0.25, 0.5,
-      0.25, 1  ,
-      // select the bottom middle image
-      0.25, 0.5,
-      0.25, 1  ,
-      0.5 , 0.5,
-      0.25, 1  ,
-      0.5 , 1  ,
-      0.5 , 0.5,
-      // select the bottom right image
-      0.5 , 0.5,
-      0.75, 0.5,
-      0.5 , 1  ,
-      0.5 , 1  ,
-      0.75, 0.5,
-      0.75, 1  ,
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
+
+      0, 0,
+      0, 1,
+      1, 0,
+      1, 0,
+      0, 1,
+      1, 1,
+
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
+
+      0, 0,
+      0, 1,
+      1, 0,
+      1, 0,
+      0, 1,
+      1, 1,
+
+      0, 0,
+      0, 1,
+      1, 0,
+      0, 1,
+      1, 1,
+      1, 0,
+
+      0, 0,
+      0, 1,
+      1, 0,
+      1, 0,
+      0, 1,
+      1, 1,
     ]),
     gl.STATIC_DRAW);
 }
