@@ -1,6 +1,6 @@
 # Onde parei
 
-Ler
+Lido (implementar)
 https://webglfundamentals.org/webgl/lessons/webgl-render-to-texture.html
 
 Ler também
@@ -33,3 +33,4 @@ https://www.youtube.com/watch?v=cQUn0Zeh-0Q
 https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
 https://webglfundamentals.org/webgl/lessons/webgl-matrix-vs-math.html
 https://www.youtube.com/watch?v=kjBOesZCoqc&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+https://webglfundamentals.org/webgl/lessons/webgl-framebuffers.html
